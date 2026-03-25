@@ -8,7 +8,7 @@ public enum Status {
     CONFIRMADO,
     FALHA_PAGAMENTO,
     SAIU_PARA_ENTREGA,
-    EENTREGUE,
+    ENTREGUE,
     CANCELADO
 
 }
