@@ -19,16 +19,13 @@ public class ItemDoPedido {
     private Long id;
 
     @Column(nullable = false)
-    private Integer quanidade;
-
+    private Integer quantidade;
     @Column(nullable = false)
     private String descricao;
-
     @Column(nullable = false)
     private BigDecimal precoUnitario;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
-
 }

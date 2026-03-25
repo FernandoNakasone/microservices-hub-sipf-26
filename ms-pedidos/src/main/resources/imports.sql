@@ -1,6 +1,6 @@
-insert into tb_pedido(data,valor_total,cpf,nome,status) values('2025-11-25',540.00,'12345678936','Jon Snow','CRIADO');
-insert into TB_PEDIDO(data,valor_total,cpf,nome,status) values('2026-01-25',3599.00,'82236545693','Arya Stark','CRIADO');
+INSERT INTO tb_pedido(nome, cpf, data, status, valor_total) VALUES('Jon Snow', '12345678963', '2025-11-25', 'CRIADO', 540.0); -- 1
+INSERT INTO tb_pedido(nome, cpf, data, status, valor_total) VALUES('Ayra Stark', '86245712365', '2026-01-25', 'CRIADO', 3599.0); -- 2
 
-insert into tb_item_do_pedido(preco_unitario,quantidade,pedido_id,descricao) values(250.00,2,1,'Mouse sem fio Microsoft');
-insert into tb_item_do_pedido(preco_unitario,quantidade,pedido_id,descricao) values(290.00,1,1,'Teclado sem fio Microsoft');
-insert into tb_item_do_pedido(preco_unitario,quantidade,pedido_id,descricao) values(3599.00,1,2,'Smart TV LG LED');
+INSERT INTO tb_item_do_pedido(quantidade, descricao, preco_unitario, pedido_id) VALUES(2, 'Mouse sem fio Microsoft', 250.0, 1);
+INSERT INTO tb_item_do_pedido(quantidade, descricao, preco_unitario, pedido_id) VALUES(1, 'Teclado sem fio Microsoft', 290.0, 1);
+INSERT INTO tb_item_do_pedido(quantidade, descricao, preco_unitario, pedido_id) VALUES(1, 'Smart TV LG LED', 3599.0, 2);
