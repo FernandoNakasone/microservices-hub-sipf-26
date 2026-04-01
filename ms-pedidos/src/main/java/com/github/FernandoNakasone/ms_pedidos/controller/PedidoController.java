@@ -42,4 +42,18 @@ public class PedidoController {
                 .toUri();
         return ResponseEntity.created(uri).body(pedidoDTO);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PedidoDTO> updatePedido(@PathVariable Long id, @Valid @RequestBody PedidoDTO pedidoDTO){
+        pedidoDTO = pedidoService.updatePedido(id,pedidoDTO);
+
+        return ResponseEntity.ok(pedidoDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePedido(@PathVariable Long id){
+        pedidoService.deletePedidoById(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

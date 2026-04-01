@@ -8,6 +8,7 @@ import com.github.FernandoNakasone.ms_pedidos.entities.Status;
 import com.github.FernandoNakasone.ms_pedidos.exceptions.ResourceNotFoundException;
 import com.github.FernandoNakasone.ms_pedidos.repositories.ItemDoPedidoRepository;
 import com.github.FernandoNakasone.ms_pedidos.repositories.PedidoRepositoy;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +52,32 @@ public class PedidoService {
         return new PedidoDTO(pedido);
     }
 
+    @Transactional
+    public PedidoDTO updatePedido(Long id, PedidoDTO pedidoDTO){
+
+        try {
+            Pedido pedido = pedidoRepositoy.getReferenceById(id);
+            pedido.getItens().clear();
+            pedido.setData(LocalDate.now());
+            pedido.setStatus(Status.CRIADO);
+            mapDtoToPedido(pedidoDTO,pedido);
+            pedido.calcularValorTotalDoPedido();
+            pedido = pedidoRepositoy.save(pedido);
+            return new PedidoDTO(pedido);
+        } catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Recurso não encontrado. ID:" + id);
+        }
+    }
+
+    @Transactional
+    public void deletePedidoById(Long id){
+        if(!pedidoRepositoy.existsById(id)){
+            throw new ResourceNotFoundException("Recurso não encontrado. ID:" + id);
+        }
+
+        pedidoRepositoy.deleteById(id);
+    }
+
     public void mapDtoToPedido(PedidoDTO pedidoDTO, Pedido pedido){
         pedido.setNome(pedidoDTO.getNome());
         pedido.setCpf(pedidoDTO.getCpf());
@@ -63,7 +90,6 @@ public class PedidoService {
             itemDoPedido.setPedido(pedido);
             pedido.getItens().add(itemDoPedido);
         }
-
     }
 
 }
