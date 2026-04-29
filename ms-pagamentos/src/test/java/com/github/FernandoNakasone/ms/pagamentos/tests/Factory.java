@@ -17,7 +17,7 @@ public class Factory {
         return pagamento;
     }
 
-    public static Pagamento createPagametoSemId(){
+    public static Pagamento createPagamentoSemId(){
         Pagamento pagamento = createPagamento();
         pagamento.setId(null);
         return pagamento;
