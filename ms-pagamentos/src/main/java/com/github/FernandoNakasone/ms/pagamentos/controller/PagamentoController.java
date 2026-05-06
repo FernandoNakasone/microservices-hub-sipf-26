@@ -33,7 +33,7 @@ public class PagamentoController {
     }
 
     @PostMapping
-    public ResponseEntity<PagamentoDTO> createPagamento(@RequestBody PagamentoDTO pagamentoDTO){
+    public ResponseEntity<PagamentoDTO> createPagamento(@Valid @RequestBody PagamentoDTO pagamentoDTO){
 
         pagamentoDTO = pagamentoService.savePagamento(pagamentoDTO);
 
