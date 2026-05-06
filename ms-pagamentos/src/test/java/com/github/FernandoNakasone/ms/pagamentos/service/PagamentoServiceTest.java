@@ -149,7 +149,7 @@ class PagamentoServiceTest {
 
         PagamentoDTO inputDto = new PagamentoDTO(pagamento);
 
-        Assertions.assertThrows(EntityNotFoundException.class,
+        Assertions.assertThrows(ResourceNotFoundException.class,
                 () -> pagamentoService.updatePagamento(nonExistingId,inputDto));
 
         Mockito.verify(pagamentoRepository).getReferenceById(nonExistingId);
