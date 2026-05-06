@@ -199,4 +199,18 @@ public class PagamentoControllerIT {
 
     }
 
+    @Test
+    void deletePagamentoShouldReturn204WhenIdExists() throws Exception {
+        mockMvc.perform(delete("/pagamentos/{id}",existingId))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void deletePagamentoShouldReturn404WhenIdDOesNotExist() throws Exception {
+        mockMvc.perform(delete("/pagamentos/{id}",nonExistingId))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
 }
