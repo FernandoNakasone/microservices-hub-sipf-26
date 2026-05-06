@@ -62,7 +62,7 @@ public class PagamentoService {
 
             return new PagamentoDTO(pagamento);
         } catch (EntityNotFoundException e){
-            throw new EntityNotFoundException("Recurso não encontrado. ID:" + id);
+            throw new ResourceNotFoundException("Recurso não encontrado. ID:" + id);
         }
     }
 
