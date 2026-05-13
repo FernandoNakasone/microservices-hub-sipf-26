@@ -1,6 +1,7 @@
 package com.github.FernandoNakasone.ms_pedidos.exceptions.handler;
 
 import com.github.FernandoNakasone.ms_pedidos.exceptions.DatabaseException;
+import com.github.FernandoNakasone.ms_pedidos.exceptions.PedidoPagoException;
 import com.github.FernandoNakasone.ms_pedidos.exceptions.ResourceNotFoundException;
 import com.github.FernandoNakasone.ms_pedidos.exceptions.dto.CustomErrorDTO;
 import com.github.FernandoNakasone.ms_pedidos.exceptions.dto.ValidationErrorDTO;
@@ -70,6 +71,16 @@ public class GlobalExceptionHandler {
                                                          HttpServletRequest request){
 
         HttpStatus status = HttpStatus.CONFLICT; //409
+        CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(),
+                e.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(PedidoPagoException.class)
+    public ResponseEntity<CustomErrorDTO> handlePedidoPago(PedidoPagoException e,
+                                                           HttpServletRequest request){
+        HttpStatus status = HttpStatus.CONFLICT;
         CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(),
                 e.getMessage(), request.getRequestURI());
 
