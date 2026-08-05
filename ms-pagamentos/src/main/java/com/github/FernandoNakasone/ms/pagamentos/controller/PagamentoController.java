@@ -2,6 +2,7 @@ package com.github.FernandoNakasone.ms.pagamentos.controller;
 
 import com.github.FernandoNakasone.ms.pagamentos.dto.PagamentoDTO;
 import com.github.FernandoNakasone.ms.pagamentos.service.PagamentoService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,7 @@ public class PagamentoController {
     }
 
     @PatchMapping("/{id}/confirmar")
+    @CircuitBreaker(name = "atualizarPedido", fallbackMethod = "fallbackConfirmarPagamentoPedido")
     public ResponseEntity<PagamentoDTO> confirmarPagamentoDoPedido(@PathVariable @NotNull Long id){
         PagamentoDTO dto = pagamentoService.confirmarPagamentoDoPedido(id);
 
