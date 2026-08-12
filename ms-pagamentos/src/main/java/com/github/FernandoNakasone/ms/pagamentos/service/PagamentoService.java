@@ -90,14 +90,14 @@ public class PagamentoService {
     }
 
     @Transactional
-    public PagamentoDTO confirmarPagamentoDoPedido(Long id){
+    public PagamentoDTO confirmarPagamentoDoPedido(Long id) {
 
-        Pagamento pagamento = pagamentoRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Pagamento não encontrado. ID:" + id));
+        Pagamento pagamento = pagamentoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pagamento não encontrado. ID: " + id)
+                );
 
         pagamento.setStatus(Status.APROVADO);
         pagamentoRepository.save(pagamento);
-
         try {
             pedidoClient.confirmarPagamento(pagamento.getPedidoId());
         } catch (FeignException.NotFound e) {
@@ -106,6 +106,19 @@ public class PagamentoService {
             throw new RuntimeException("Falha ao comunicar com ms-pedidos", e);
         }
         return new PagamentoDTO(pagamento);
+    }
+
+    @Transactional
+    public PagamentoDTO alterarStatusDoPagamento(Long id){
+
+        Pagamento pagamento = pagamentoRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Pagamento não encontrado. ID:" + id)
+        );
+
+        pagamento.setStatus(Status.CONFIRMACAO_PENDENTE);
+        pagamento = pagamentoRepository.save(pagamento);
+        return new PagamentoDTO(pagamento);
+
     }
 
 }
